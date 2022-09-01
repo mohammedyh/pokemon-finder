@@ -45,6 +45,30 @@ function App() {
 	// );
 
 	// TODO: When next button is clicked make request to `nextURL`
+	// things todo when button is clicked
+	// Fetch new data, set state for pokemonData, previousURL and nextURL
+
+	async function handleNext() {
+		if (nextURL === null) return;
+
+		const response = await axios(nextURL);
+		setPokemonData(response.data);
+		setIsLoading(false);
+		setNextURL(response.data.next);
+		setPreviousURL(response.data.previous);
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+	}
+
+	async function handlePrevious() {
+		if (previousURL === null) return;
+
+		const response = await axios(previousURL);
+		setPokemonData(response.data);
+		setIsLoading(false);
+		setNextURL(response.data.next);
+		setPreviousURL(response.data.previous);
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+	}
 
 	if (isLoading) {
 		return (
@@ -76,7 +100,7 @@ function App() {
 				</InputGroup>
 			</Box>
 
-			{pokemonData.results.map((pokemon, index) => (
+			{pokemonData.results.map(pokemon => (
 				<Link key={pokemon.name} to={`/pokemon/${pokemon.name}`}>
 					<HStack
 						marginTop={8}
@@ -88,7 +112,7 @@ function App() {
 					>
 						<Image
 							src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
-								index + 1
+								pokemon.url.split('/')[6]
 							}.png`}
 							alt={pokemon.name}
 							boxSize="80px"
@@ -102,17 +126,13 @@ function App() {
 			))}
 
 			<Flex justifyContent="space-between" paddingTop={10} paddingBottom={10}>
-				<Link to="#">
-					<Button colorScheme="teal" variant="outline">
-						Previous {previousURL}
-					</Button>
-				</Link>
+				<Button colorScheme="teal" variant="outline" onClick={handlePrevious}>
+					Previous
+				</Button>
 
-				<Link to="#">
-					<Button colorScheme="teal" variant="outline">
-						Next - {nextURL}
-					</Button>
-				</Link>
+				<Button colorScheme="teal" variant="outline" onClick={handleNext}>
+					Next
+				</Button>
 			</Flex>
 		</Container>
 	);

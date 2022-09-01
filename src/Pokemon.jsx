@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import {
 	Alert,
@@ -8,6 +7,7 @@ import {
 	Box,
 	Center,
 	Container,
+	Flex,
 	Heading,
 	HStack,
 	Image,
@@ -19,6 +19,7 @@ import {
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 function Pokemon() {
@@ -110,34 +111,56 @@ function Pokemon() {
 						))}
 					</StatGroup>
 
-					<Heading size="xl" color="gray.200" marginTop={8}>
-						Abilities
-					</Heading>
-					<HStack gap="2rem" marginTop={4}>
-						{info.abilities.map(({ ability }, i) => (
-							<Heading
-								key={i}
-								size="md"
-								color="white"
-								textTransform="capitalize"
-							>
-								{ability.name}
+					<Flex gap={[0, 24]} flexWrap="wrap">
+						<Box>
+							<Heading size="xl" color="gray.200" marginTop={8}>
+								Abilities
 							</Heading>
-						))}
-					</HStack>
+							<HStack gap="2rem" marginTop={4}>
+								{info.abilities.map(({ ability }, i) => (
+									<Heading
+										key={i}
+										size="md"
+										color="white"
+										textTransform="capitalize"
+									>
+										{ability.name}
+									</Heading>
+								))}
+							</HStack>
+						</Box>
+
+						<Box>
+							<Heading size="xl" color="gray.200" marginTop={8}>
+								Types
+							</Heading>
+							<HStack gap="2rem" marginTop={4}>
+								{info.types.map(({ type }, i) => (
+									<Heading
+										key={i}
+										size="md"
+										color="white"
+										textTransform="capitalize"
+									>
+										{type.name}
+									</Heading>
+								))}
+							</HStack>
+						</Box>
+					</Flex>
 
 					<Heading size="xl" color="gray.200" marginTop={8}>
-						Types
+						Moves
 					</Heading>
 					<HStack gap="2rem" marginTop={4}>
-					{info.types.map(({ type }, i) => (
+						{info.moves.slice(0, 3).map(({ move }, i) => (
 							<Heading
 								key={i}
 								size="md"
 								color="white"
 								textTransform="capitalize"
 							>
-								{type.name}
+								{move.name}
 							</Heading>
 						))}
 					</HStack>
