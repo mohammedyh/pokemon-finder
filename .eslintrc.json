@@ -1,0 +1,16 @@
+{
+	"env": {
+		"browser": true,
+		"es2021": true
+	},
+	"parserOptions": {
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"jsx": true
+		}
+	},
+	"root": true,
+	"extends": "react-app",
+	"ignorePatterns": "vite.config.js",
+	"plugins": ["react", "prettier", "jsx-a11y"]
+}
