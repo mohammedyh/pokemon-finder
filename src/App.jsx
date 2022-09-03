@@ -1,5 +1,9 @@
 import { SearchIcon } from '@chakra-ui/icons';
 import {
+	Alert,
+	AlertDescription,
+	AlertIcon,
+	AlertTitle,
 	Box,
 	Button,
 	Center,
@@ -23,20 +27,25 @@ function App() {
 	const [nextURL, setNextURL] = useState(null);
 	const [previousURL, setPreviousURL] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
-	const initialURL = 'https://pokeapi.co/api/v2/pokemon';
+	const [error, setError] = useState('');
+
+	// Use fetch instead of axois
+	// add aborts to useEffect - if request fails. (optional parameter for abort controller)
+	async function fetchPokemonList(url = 'https://pokeapi.co/api/v2/pokemon') {
+		try {
+			setIsLoading(true);
+			const response = await axios(url);
+			setPokemonData(response.data);
+			setIsLoading(false);
+			setNextURL(response.data.next);
+			setPreviousURL(response.data.previous);
+		} catch (error) {
+			setIsLoading(false);
+			setError(error.message);
+		}
+	}
 
 	useEffect(() => {
-		async function fetchPokemonList() {
-			try {
-				const response = await axios(initialURL);
-				setPokemonData(response.data);
-				setIsLoading(false);
-				setNextURL(response.data.next);
-				setPreviousURL(response.data.previous);
-			} catch (error) {
-				console.log(error.message);
-			}
-		}
 		fetchPokemonList();
 	}, []);
 
@@ -44,29 +53,18 @@ function App() {
 	// 	axios(`https://pokeapi.co/api/v2/pokemon/${search}`).then(res => res.data),
 	// );
 
-	// TODO: When next button is clicked make request to `nextURL`
-	// things todo when button is clicked
-	// Fetch new data, set state for pokemonData, previousURL and nextURL
-
 	async function handleNext() {
 		if (nextURL === null) return;
 
-		const response = await axios(nextURL);
-		setPokemonData(response.data);
-		setIsLoading(false);
-		setNextURL(response.data.next);
-		setPreviousURL(response.data.previous);
+		await fetchPokemonList(nextURL);
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 	}
 
+	// use useCallbacks
 	async function handlePrevious() {
 		if (previousURL === null) return;
 
-		const response = await axios(previousURL);
-		setPokemonData(response.data);
-		setIsLoading(false);
-		setNextURL(response.data.next);
-		setPreviousURL(response.data.previous);
+		await fetchPokemonList(previousURL);
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 	}
 
@@ -75,6 +73,16 @@ function App() {
 			<Center height="100vh">
 				<Spinner size="lg" color="red" />
 			</Center>
+		);
+	}
+
+	if (error) {
+		return (
+			<Alert status="error" variant="solid">
+				<AlertIcon />
+				<AlertTitle>An error occurred!</AlertTitle>
+				<AlertDescription>{error}</AlertDescription>
+			</Alert>
 		);
 	}
 

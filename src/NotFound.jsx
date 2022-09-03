@@ -9,7 +9,7 @@ function NotFound() {
 			</Heading>
 
 			<Link to="/">
-				<Button colorScheme="teal" size="md" marginTop="8">
+				<Button colorScheme="teal" size="lg" marginTop={10}>
 					Back to Home
 				</Button>
 			</Link>

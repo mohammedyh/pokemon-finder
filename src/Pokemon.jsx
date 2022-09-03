@@ -1,13 +1,8 @@
 import { ArrowBackIcon } from '@chakra-ui/icons';
 import {
-	Alert,
-	AlertDescription,
-	AlertIcon,
-	AlertTitle,
 	Box,
 	Center,
 	Container,
-	Flex,
 	Heading,
 	HStack,
 	Image,
@@ -17,45 +12,39 @@ import {
 	StatLabel,
 	StatNumber,
 } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 function Pokemon() {
+	const [pokemonData, setPokemonData] = useState({});
+	const [isLoading, setIsLoading] = useState(true);
 	const { name } = useParams();
+	const navigate = useNavigate();
 
-	const { data, error, isLoading, isError } = useQuery(
-		['fetchPokemon'],
-		async () => {
-			try {
-				const res = await axios.get(
-					`https://pokeapi.co/api/v2/pokemon/${name}`
-				);
-				return res.data;
-			} catch (error) {
-				console.error(error);
-				return error;
+	const fetchPokemonList = useCallback(async () => {
+		try {
+			const response = await axios(`https://pokeapi.co/api/v2/pokemon/${name}`);
+			setPokemonData(response.data);
+			setIsLoading(false);
+		} catch (error) {
+			if (axios.isAxiosError(error)) {
+				if (error.response?.status === 404) {
+					navigate('/404');
+				}
 			}
-		},
-		{ retry: false, useErrorBoundary: true }
-	);
+		}
+	}, [name, navigate]);
+
+	useEffect(() => {
+		fetchPokemonList();
+	}, [fetchPokemonList]);
 
 	if (isLoading) {
 		return (
 			<Center height="100vh">
 				<Spinner size="lg" color="red" />
 			</Center>
-		);
-	}
-
-	if (isError) {
-		return (
-			<Alert status="error" color="white" backgroundColor="red.400">
-				<AlertIcon />
-				<AlertTitle>Pokemon of name {name}, wasn't found</AlertTitle>
-				<AlertDescription>{error}</AlertDescription>
-			</Alert>
 		);
 	}
 
@@ -78,8 +67,7 @@ function Pokemon() {
 				</Heading>
 			</HStack>
 
-			{/* TODO: Destructure info object */}
-			{[data].map(info => (
+			{[pokemonData].map(info => (
 				<Box key={info.id} marginTop={8}>
 					<HStack wrap="wrap">
 						<Image
@@ -111,43 +99,37 @@ function Pokemon() {
 						))}
 					</StatGroup>
 
-					<Flex gap={[0, 24]} flexWrap="wrap">
-						<Box>
-							<Heading size="xl" color="gray.200" marginTop={8}>
-								Abilities
+					<Heading size="xl" color="gray.200" marginTop={8}>
+						Abilities
+					</Heading>
+					<HStack gap="2rem" marginTop={4}>
+						{info.abilities.map(({ ability }, i) => (
+							<Heading
+								key={i}
+								size="md"
+								color="white"
+								textTransform="capitalize"
+							>
+								{ability.name}
 							</Heading>
-							<HStack gap="2rem" marginTop={4}>
-								{info.abilities.map(({ ability }, i) => (
-									<Heading
-										key={i}
-										size="md"
-										color="white"
-										textTransform="capitalize"
-									>
-										{ability.name}
-									</Heading>
-								))}
-							</HStack>
-						</Box>
+						))}
+					</HStack>
 
-						<Box>
-							<Heading size="xl" color="gray.200" marginTop={8}>
-								Types
+					<Heading size="xl" color="gray.200" marginTop={8}>
+						Types
+					</Heading>
+					<HStack gap="2rem" marginTop={4}>
+						{info.types.map(({ type }, i) => (
+							<Heading
+								key={i}
+								size="md"
+								color="white"
+								textTransform="capitalize"
+							>
+								{type.name}
 							</Heading>
-							<HStack gap="2rem" marginTop={4}>
-								{info.types.map(({ type }, i) => (
-									<Heading
-										key={i}
-										size="md"
-										color="white"
-										textTransform="capitalize"
-									>
-										{type.name}
-									</Heading>
-								))}
-							</HStack>
-						</Box>
-					</Flex>
+						))}
+					</HStack>
 
 					<Heading size="xl" color="gray.200" marginTop={8}>
 						Moves
