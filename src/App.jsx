@@ -17,28 +17,27 @@ import {
 	InputLeftAddon,
 	Spinner,
 } from '@chakra-ui/react';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function App() {
-	const [search, setSearch] = useState('');
 	const [pokemonData, setPokemonData] = useState({});
 	const [nextURL, setNextURL] = useState(null);
 	const [previousURL, setPreviousURL] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState('');
 
-	// Use fetch instead of axois
 	// add aborts to useEffect - if request fails. (optional parameter for abort controller)
 	async function fetchPokemonList(url = 'https://pokeapi.co/api/v2/pokemon') {
 		try {
 			setIsLoading(true);
-			const response = await axios(url);
-			setPokemonData(response.data);
+			const response = await fetch(url);
+			const data = await response.json();
+
+			setPokemonData(data);
 			setIsLoading(false);
-			setNextURL(response.data.next);
-			setPreviousURL(response.data.previous);
+			setNextURL(data.next);
+			setPreviousURL(data.previous);
 		} catch (error) {
 			setIsLoading(false);
 			setError(error.message);
@@ -49,24 +48,34 @@ function App() {
 		fetchPokemonList();
 	}, []);
 
-	// const { isLoading, isError, data, error } = useQuery(['fetchSearchedPokemon'], () =>
-	// 	axios(`https://pokeapi.co/api/v2/pokemon/${search}`).then(res => res.data),
-	// );
+	const filterPokemonList = async e => {
+		try {
+			const response = await fetch(
+				'https://pokeapi.co/api/v2/pokemon?limit=1154'
+			);
+			const data = await response.json();
+			const filteredPokemon = data.results.filter(item =>
+				item.name.includes(e.target.value.trim())
+			);
+			setPokemonData({ results: filteredPokemon });
+		} catch (error) {
+			setError(error.message);
+		}
+	};
 
-	async function handleNext() {
+	const handleNext = useCallback(async () => {
 		if (nextURL === null) return;
 
 		await fetchPokemonList(nextURL);
 		window.scrollTo({ top: 0, behavior: 'smooth' });
-	}
+	}, [nextURL]);
 
-	// use useCallbacks
-	async function handlePrevious() {
+	const handlePrevious = useCallback(async () => {
 		if (previousURL === null) return;
 
 		await fetchPokemonList(previousURL);
 		window.scrollTo({ top: 0, behavior: 'smooth' });
-	}
+	}, [previousURL]);
 
 	if (isLoading) {
 		return (
@@ -101,9 +110,8 @@ function App() {
 					<Input
 						variant="filled"
 						placeholder="Search for a Pokémon"
-						value={search}
 						color="gray.300"
-						onChange={e => setSearch(e.target.value)}
+						onChange={filterPokemonList}
 					/>
 				</InputGroup>
 			</Box>
@@ -120,9 +128,10 @@ function App() {
 					>
 						<Image
 							src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
-								pokemon.url.split('/')[6]
+								pokemon.url.split('/')[6] ?? 'TEST'
 							}.png`}
 							alt={pokemon.name}
+							color="white"
 							boxSize="80px"
 							marginRight={4}
 						/>

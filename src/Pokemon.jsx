@@ -12,7 +12,6 @@ import {
 	StatLabel,
 	StatNumber,
 } from '@chakra-ui/react';
-import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
@@ -24,15 +23,12 @@ function Pokemon() {
 
 	const fetchPokemonList = useCallback(async () => {
 		try {
-			const response = await axios(`https://pokeapi.co/api/v2/pokemon/${name}`);
-			setPokemonData(response.data);
+			const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+			const data = await response.json();
+			setPokemonData(data);
 			setIsLoading(false);
 		} catch (error) {
-			if (axios.isAxiosError(error)) {
-				if (error.response?.status === 404) {
-					navigate('/404');
-				}
-			}
+			navigate('/404');
 		}
 	}, [name, navigate]);
 
