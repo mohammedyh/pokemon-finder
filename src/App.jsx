@@ -17,7 +17,6 @@ import {
 	InputLeftAddon,
 	Spinner,
 } from '@chakra-ui/react';
-import { useMemo } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -27,14 +26,12 @@ function App() {
 	const [previousURL, setPreviousURL] = useState(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [error, setError] = useState('');
-	const controller = useMemo(() => new AbortController(), []);
 
-	// add aborts to useEffect - if request fails. (optional parameter for abort controller)
 	const fetchPokemonList = useCallback(
 		async (url = 'https://pokeapi.co/api/v2/pokemon') => {
 			try {
 				setIsLoading(true);
-				const response = await fetch(url, { signal: controller });
+				const response = await fetch(url);
 				const data = await response.json();
 
 				setPokemonData(data);
@@ -46,13 +43,12 @@ function App() {
 				setError(error.message);
 			}
 		},
-		[controller]
+		[]
 	);
 
 	useEffect(() => {
 		fetchPokemonList();
-		return () => controller.abort();
-	}, [controller, fetchPokemonList]);
+	}, [fetchPokemonList]);
 
 	const filterPokemonList = async e => {
 		try {
