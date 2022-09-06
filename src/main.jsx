@@ -1,5 +1,4 @@
 import { ChakraProvider, DarkMode, extendTheme } from '@chakra-ui/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
@@ -16,12 +15,10 @@ const theme = extendTheme({
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
-		<QueryClientProvider client={new QueryClient()}>
-			<ChakraProvider theme={theme}>
-				<DarkMode>
-					<AppRouter />
-				</DarkMode>
-			</ChakraProvider>
-		</QueryClientProvider>
+		<ChakraProvider theme={theme}>
+			<DarkMode>
+				<AppRouter />
+			</DarkMode>
+		</ChakraProvider>
 	</React.StrictMode>
 );

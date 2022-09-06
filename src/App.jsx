@@ -20,6 +20,8 @@ import {
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import useDebounce from './hooks/useDebounce';
+
 function App() {
 	const [pokemonData, setPokemonData] = useState({});
 	const [nextURL, setNextURL] = useState(null);
@@ -50,8 +52,12 @@ function App() {
 		fetchPokemonList();
 	}, [fetchPokemonList]);
 
-	const filterPokemonList = async e => {
+	const filterPokemonList = useDebounce(async e => {
 		try {
+			if (e.target.value.trim() === '') {
+				return await fetchPokemonList();
+			}
+
 			const response = await fetch(
 				'https://pokeapi.co/api/v2/pokemon?limit=1154'
 			);
@@ -63,7 +69,7 @@ function App() {
 		} catch (error) {
 			setError(error.message);
 		}
-	};
+	}, 600);
 
 	const handleNext = useCallback(async () => {
 		if (nextURL === null) return;
