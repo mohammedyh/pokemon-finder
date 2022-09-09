@@ -55,7 +55,9 @@ function App() {
 	const filterPokemonList = useDebounce(async e => {
 		try {
 			if (e.target.value.trim() === '') {
-				return await fetchPokemonList();
+				const response = await fetch('https://pokeapi.co/api/v2/pokemon');
+				const data = await response.json();
+				setPokemonData(data);
 			}
 
 			const response = await fetch(
