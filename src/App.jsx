@@ -65,7 +65,7 @@ function App() {
 			);
 			const data = await response.json();
 			const filteredPokemon = data.results.filter(item =>
-				item.name.includes(e.target.value.trim())
+				item.name.includes(e.target.value.toLowerCase().trim())
 			);
 			setPokemonData({ results: filteredPokemon });
 		} catch (error) {
