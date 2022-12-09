@@ -55,7 +55,6 @@ function App() {
 	const filterPokemonList = useDebounce(async e => {
 		try {
 			if (e.target.value.trim() === '') {
-				console.log('input is empty')
 				return await fetchPokemonList();
 			}
 
