@@ -2,6 +2,12 @@
 
 Search and view information about various Pokémon.
 
+## Screenshots
+
+![List of all Pokemon](https://raw.githubusercontent.com/mohammedyh/pokemon-app/master/public/screenshot.png)
+
+![List of searched Pokemon](https://github.com/mohammedyh/pokemon-app/blob/master/public/screenshot-2.png?raw=true)
+
 ## Features
 
 - Individual Pokemon views
@@ -36,12 +42,6 @@ Start the server
 ```bash
 pnpm dev
 ```
-
-## Screenshots
-
-![List of all Pokemon](https://raw.githubusercontent.com/mohammedyh/pokemon-app/master/public/screenshot.png)
-
-![List of searched Pokemon](https://github.com/mohammedyh/pokemon-app/blob/master/public/screenshot-2.png?raw=true)
 
 ## Demo
 
