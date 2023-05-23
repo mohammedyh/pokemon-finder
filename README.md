@@ -1,4 +1,4 @@
-# pokemon-app
+# pokemon-finder
 
 Search and view information about various Pokémon.
 
