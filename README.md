@@ -4,9 +4,9 @@ Search and view information about various Pokémon.
 
 ## Screenshots
 
-![List of all Pokemon](https://raw.githubusercontent.com/mohammedyh/pokemon-app/master/public/screenshot.png)
+![List of all Pokemon](https://raw.githubusercontent.com/mohammedyh/pokemon-finder/master/public/screenshot.png)
 
-![List of searched Pokemon](https://github.com/mohammedyh/pokemon-app/blob/master/public/screenshot-2.png?raw=true)
+![List of searched Pokemon](https://github.com/mohammedyh/pokemon-finder/blob/master/public/screenshot-2.png?raw=true)
 
 ## Features
 
@@ -15,20 +15,20 @@ Search and view information about various Pokémon.
 - Pagination
 - Debouncing
 - Responsive
-- Loading animations
+- Loading states
 
 ## Run Locally
 
 Clone the project:
 
 ```bash
-git clone https://github.com/mohammedyh/pokemon-app.git
+git clone https://github.com/mohammedyh/pokemon-finder.git
 ```
 
 Go to the project directory
 
 ```bash
-cd pokemon-app
+cd pokemon-finder
 ```
 
 Install dependencies
