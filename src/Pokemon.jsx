@@ -1,18 +1,16 @@
-import { ArrowBackIcon } from '@chakra-ui/icons';
 import {
 	Box,
 	Center,
 	Container,
+	Flex,
 	Heading,
 	HStack,
 	Image,
 	Spinner,
 	Stat,
-	StatGroup,
-	StatLabel,
-	StatNumber,
 } from '@chakra-ui/react';
 import { useCallback, useEffect, useState } from 'react';
+import { HiArrowLeft } from 'react-icons/hi2';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 function Pokemon() {
@@ -39,7 +37,7 @@ function Pokemon() {
 	if (isLoading) {
 		return (
 			<Center height="100vh">
-				<Spinner size="lg" color="red" />
+				<Spinner />
 			</Center>
 		);
 	}
@@ -54,7 +52,7 @@ function Pokemon() {
 						padding={2}
 						marginRight={3}
 					>
-						<ArrowBackIcon color="gray.200" w={6} h={6} />
+						<HiArrowLeft color="gray.200" w={6} h={6} />
 					</Box>
 				</Link>
 
@@ -86,14 +84,15 @@ function Pokemon() {
 					<Heading size="xl" color="gray.200">
 						Stats
 					</Heading>
-					<StatGroup flexWrap="wrap" marginTop={4}>
+
+					<Flex>
 						{info.stats.map(({ stat, base_stat }, i) => (
-							<Stat key={i} color="gray.300">
-								<StatLabel textTransform="capitalize">{stat.name}</StatLabel>
-								<StatNumber>{base_stat}</StatNumber>
-							</Stat>
+							<Stat.Root key={i} flexWrap="wrap" marginTop={4}>
+								<Stat.Label textTransform="capitalize">{stat.name}</Stat.Label>
+								<Stat.ValueText>{base_stat}</Stat.ValueText>
+							</Stat.Root>
 						))}
-					</StatGroup>
+					</Flex>
 
 					<Heading size="xl" color="gray.200" marginTop={8}>
 						Abilities

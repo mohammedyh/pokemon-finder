@@ -1,9 +1,5 @@
-import { SearchIcon } from '@chakra-ui/icons';
 import {
 	Alert,
-	AlertDescription,
-	AlertIcon,
-	AlertTitle,
 	Box,
 	Button,
 	Center,
@@ -13,11 +9,12 @@ import {
 	HStack,
 	Image,
 	Input,
+	InputAddon,
 	InputGroup,
-	InputLeftAddon,
 	Spinner,
 } from '@chakra-ui/react';
 import { useCallback, useEffect, useState } from 'react';
+import { HiMagnifyingGlass } from 'react-icons/hi2';
 import { Link } from 'react-router-dom';
 
 import useDebounce from './hooks/useDebounce';
@@ -45,7 +42,7 @@ function App() {
 				setError(error.message);
 			}
 		},
-		[]
+		[],
 	);
 
 	useEffect(() => {
@@ -59,11 +56,11 @@ function App() {
 			}
 
 			const response = await fetch(
-				'https://pokeapi.co/api/v2/pokemon?limit=1154'
+				'https://pokeapi.co/api/v2/pokemon?limit=1154',
 			);
 			const data = await response.json();
 			const filteredPokemon = data.results.filter(item =>
-				item.name.includes(e.target.value.toLowerCase().trim())
+				item.name.includes(e.target.value.toLowerCase().trim()),
 			);
 			setPokemonData({ results: filteredPokemon });
 		} catch (error) {
@@ -95,11 +92,13 @@ function App() {
 
 	if (error) {
 		return (
-			<Alert status="error" variant="solid">
-				<AlertIcon />
-				<AlertTitle>An error occurred!</AlertTitle>
-				<AlertDescription>{error}</AlertDescription>
-			</Alert>
+			<Alert.Root status="error" variant="solid">
+				<Alert.Indicator />
+				<Alert.Content>
+					<Alert.Title>An error occurred!</Alert.Title>
+					<Alert.Description>{error}</Alert.Description>
+				</Alert.Content>
+			</Alert.Root>
 		);
 	}
 
@@ -110,11 +109,7 @@ function App() {
 					Pokémon Finder
 				</Heading>
 
-				<InputGroup flex={1}>
-					<InputLeftAddon
-						children={<SearchIcon color="white" />}
-						backgroundColor="gray.700"
-					/>
+				<InputGroup startAddon={<HiMagnifyingGlass color="white" />}>
 					<Input
 						variant="filled"
 						placeholder="Search for a Pokémon"
