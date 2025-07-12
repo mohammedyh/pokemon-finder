@@ -1,18 +1,9 @@
-import {
-  Alert,
-  Button,
-  Center,
-  Container,
-  Flex,
-  Heading,
-  HStack,
-  Image,
-} from "@chakra-ui/react";
+import { Alert, Button, Center, Container, Flex } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 import Header from "./components/header";
 import Loading from "./components/loading";
+import PokemonItem from "./components/pokemon-item";
 import useDebounce from "./hooks/use-debounce";
 
 function App() {
@@ -108,33 +99,7 @@ function App() {
       <Header filterPokemonList={filterPokemonList} />
 
       {pokemonData.results.map(pokemon => (
-        <Link key={pokemon.name} to={`/pokemon/${pokemon.name}`}>
-          <HStack
-            marginTop={8}
-            backgroundColor="gray.800"
-            rounded="lg"
-            padding="1rem"
-            transition="all 200ms ease-in-out"
-            _hover={{ backgroundColor: "gray.700" }}
-          >
-            <Image
-              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${
-                pokemon.url.split("/")[6] ?? "TEST"
-              }.png`}
-              alt={pokemon.name}
-              color="white"
-              boxSize="80px"
-              marginRight={4}
-            />
-            <Heading
-              size={["2xl", "3xl"]}
-              color="gray.200"
-              textTransform="capitalize"
-            >
-              {pokemon.name}
-            </Heading>
-          </HStack>
-        </Link>
+        <PokemonItem key={pokemon.name} pokemon={pokemon} />
       ))}
 
       <Flex justifyContent="space-between" paddingTop={10} paddingBottom={10}>
