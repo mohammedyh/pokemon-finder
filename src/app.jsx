@@ -27,6 +27,9 @@ function App() {
       try {
         setIsLoading(true);
         const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch data`);
+        }
         const data = await response.json();
 
         setPokemonData(data);
@@ -54,6 +57,10 @@ function App() {
       const response = await fetch(
         "https://pokeapi.co/api/v2/pokemon?limit=1154",
       );
+      if (!response.ok) {
+        throw new Error(`Failed to search Pokémon list`);
+      }
+
       const data = await response.json();
       const filteredPokemon = data.results.filter(item =>
         item.name.includes(e.target.value.toLowerCase().trim()),

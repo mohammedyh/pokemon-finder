@@ -2,7 +2,6 @@ import {
   Box,
   Center,
   Container,
-  Flex,
   Grid,
   GridItem,
   Heading,
@@ -21,20 +20,24 @@ function Pokemon() {
   const { name } = useParams();
   const navigate = useNavigate();
 
-  const fetchPokemonList = useCallback(async () => {
+  const fetchPokemon = useCallback(async () => {
     try {
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch Pokemon data`);
+      }
+
       const data = await response.json();
       setPokemonData(data);
       setIsLoading(false);
     } catch (error) {
-      navigate("/404");
+      navigate("/404", { state: { error } });
     }
   }, [name, navigate]);
 
   useEffect(() => {
-    fetchPokemonList();
-  }, [fetchPokemonList]);
+    fetchPokemon();
+  }, [fetchPokemon]);
 
   if (isLoading) {
     return (
