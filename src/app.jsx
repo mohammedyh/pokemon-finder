@@ -156,13 +156,21 @@ function App() {
       ))}
 
       <Flex justifyContent="space-between" paddingTop={10} paddingBottom={10}>
-        <Button colorScheme="teal" variant="outline" onClick={handlePrevious}>
-          Previous
-        </Button>
+        {previousURL ? (
+          <Button colorPalette="teal" variant="solid" onClick={handlePrevious}>
+            Previous
+          </Button>
+        ) : (
+          <div />
+        )}
 
-        <Button colorScheme="teal" variant="outline" onClick={handleNext}>
-          Next
-        </Button>
+        {nextURL ? (
+          <Button colorPalette="teal" variant="solid" onClick={handleNext}>
+            Next
+          </Button>
+        ) : (
+          <div />
+        )}
       </Flex>
     </Container>
   );
