@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom';
 function NotFound() {
 	return (
 		<Center flexDirection="column" height="85vh">
-			<Heading size="2xl" color="gray.300">
-				Pokémon Not Found
+			<Heading size="4xl" color="gray.200">
+				Pokémon doesn't exist
 			</Heading>
 
 			<Link to="/">
-				<Button colorScheme="teal" size="lg" marginTop={10}>
-					Back to Home
+				<Button bg="teal.600" size="lg" marginTop={10}>
+					Back to home
 				</Button>
 			</Link>
 		</Center>

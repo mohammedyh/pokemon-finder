@@ -3,6 +3,8 @@ import {
 	Center,
 	Container,
 	Flex,
+	Grid,
+	GridItem,
 	Heading,
 	HStack,
 	Image,
@@ -46,17 +48,17 @@ function Pokemon() {
 		<Container maxW="4xl" marginTop={8}>
 			<HStack>
 				<Link to="/">
-					<Box
-						backgroundColor="gray.700"
-						rounded="base"
-						padding={2}
-						marginRight={3}
-					>
-						<HiArrowLeft color="gray.200" w={6} h={6} />
+					<Box backgroundColor="gray.700" rounded="sm" padding={2}>
+						<HiArrowLeft color="white" w={6} h={6} />
 					</Box>
 				</Link>
 
-				<Heading size="2xl" color="gray.200" textTransform="capitalize">
+				<Heading
+					size="3xl"
+					color="gray.200"
+					textTransform="capitalize"
+					marginLeft={3}
+				>
 					{name}
 				</Heading>
 			</HStack>
@@ -67,17 +69,17 @@ function Pokemon() {
 						<Image
 							src={info.sprites.front_default}
 							alt={`${name} front default`}
-							boxSize="12rem"
+							width={['24', '56']}
 						/>
 						<Image
 							src={info.sprites.back_default}
 							alt={`${name} back default`}
-							boxSize="12rem"
+							width={['24', '56']}
 						/>
 						<Image
 							src={info.sprites.front_shiny}
 							alt={`${name} front shiny`}
-							boxSize="12rem"
+							width={['24', '56']}
 						/>
 					</HStack>
 
@@ -85,14 +87,24 @@ function Pokemon() {
 						Stats
 					</Heading>
 
-					<Flex>
+					<Grid
+						templateColumns={[
+							'repeat(3, 1fr)',
+							'repeat(auto-fit, minmax(100px, 1fr))',
+						]}
+						placeContent="center"
+					>
 						{info.stats.map(({ stat, base_stat }, i) => (
-							<Stat.Root key={i} flexWrap="wrap" marginTop={4}>
-								<Stat.Label textTransform="capitalize">{stat.name}</Stat.Label>
-								<Stat.ValueText>{base_stat}</Stat.ValueText>
-							</Stat.Root>
+							<GridItem key={i}>
+								<Stat.Root flexWrap="wrap" marginTop={4}>
+									<Stat.Label textTransform="capitalize" color="gray.300">
+										{stat.name}
+									</Stat.Label>
+									<Stat.ValueText color="gray.100">{base_stat}</Stat.ValueText>
+								</Stat.Root>
+							</GridItem>
 						))}
-					</Flex>
+					</Grid>
 
 					<Heading size="xl" color="gray.200" marginTop={8}>
 						Abilities

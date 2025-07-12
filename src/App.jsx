@@ -105,15 +105,21 @@ function App() {
 	return (
 		<Container maxW="4xl" marginTop="8">
 			<Box display="flex" alignItems="center">
-				<Heading size={['md', 'xl']} flex={1} color="gray.300">
+				<Heading size={['md', '3xl']} flex={1} color="gray.200">
 					Pokémon Finder
 				</Heading>
 
-				<InputGroup startAddon={<HiMagnifyingGlass color="white" />}>
+				<InputGroup
+					flex={[2, 1]}
+					startAddon={<HiMagnifyingGlass size={18} color="white" />}
+					startAddonProps={{ bg: 'gray.700', border: 'none' }}
+				>
 					<Input
-						variant="filled"
+						variant="subtle"
 						placeholder="Search for a Pokémon"
-						color="gray.300"
+						_placeholder={{color: 'gray.400'}}
+						color="gray.200"
+						bgColor="gray.800"
 						onChange={filterPokemonList}
 					/>
 				</InputGroup>
@@ -138,7 +144,11 @@ function App() {
 							boxSize="80px"
 							marginRight={4}
 						/>
-						<Heading size="lg" color="gray.200" textTransform="capitalize">
+						<Heading
+							size={['2xl', '3xl']}
+							color="gray.200"
+							textTransform="capitalize"
+						>
 							{pokemon.name}
 						</Heading>
 					</HStack>
