@@ -95,13 +95,15 @@ function App() {
 
   if (error) {
     return (
-      <Alert.Root status="error" variant="solid">
-        <Alert.Indicator />
-        <Alert.Content>
-          <Alert.Title>An error occurred!</Alert.Title>
-          <Alert.Description>{error}</Alert.Description>
-        </Alert.Content>
-      </Alert.Root>
+      <Center height="100vh">
+        <Alert.Root status="error" variant="solid" width="fit">
+          <Alert.Indicator />
+          <Alert.Content>
+            <Alert.Title>An error occurred!</Alert.Title>
+            <Alert.Description>{error}</Alert.Description>
+          </Alert.Content>
+        </Alert.Root>
+      </Center>
     );
   }
 
