@@ -1,6 +1,5 @@
 import {
   Alert,
-  Box,
   Button,
   Center,
   Container,
@@ -8,15 +7,12 @@ import {
   Heading,
   HStack,
   Image,
-  Input,
-  InputAddon,
-  InputGroup,
   Spinner,
 } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
-import { HiMagnifyingGlass } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 
+import Header from "./components/header";
 import useDebounce from "./hooks/use-debounce";
 
 function App() {
@@ -104,26 +100,7 @@ function App() {
 
   return (
     <Container maxW="4xl" marginTop="8">
-      <Box display="flex" alignItems="center">
-        <Heading size={["md", "3xl"]} flex={1} color="gray.200">
-          Pokémon Finder
-        </Heading>
-
-        <InputGroup
-          flex={[2, 1]}
-          startAddon={<HiMagnifyingGlass size={18} color="white" />}
-          startAddonProps={{ bg: "gray.700", border: "none" }}
-        >
-          <Input
-            variant="subtle"
-            placeholder="Search for a Pokémon"
-            _placeholder={{ color: "gray.400" }}
-            color="gray.200"
-            bgColor="gray.800"
-            onChange={filterPokemonList}
-          />
-        </InputGroup>
-      </Box>
+      <Header filterPokemonList={filterPokemonList} />
 
       {pokemonData.results.map(pokemon => (
         <Link key={pokemon.name} to={`/pokemon/${pokemon.name}`}>
