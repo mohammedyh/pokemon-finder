@@ -21,11 +21,7 @@ function PokemonItem({ pokemon }) {
           boxSize="80px"
           marginRight={4}
         />
-        <Heading
-          size={["2xl", "3xl"]}
-          color="gray.200"
-          textTransform="capitalize"
-        >
+        <Heading size={["2xl", "3xl"]} color="gray.200" textTransform="capitalize">
           {pokemon.name}
         </Heading>
       </HStack>

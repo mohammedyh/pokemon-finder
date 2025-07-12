@@ -13,27 +13,24 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const fetchPokemonList = useCallback(
-    async (url = "https://pokeapi.co/api/v2/pokemon") => {
-      try {
-        setIsLoading(true);
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(`Failed to fetch data`);
-        }
-        const data = await response.json();
-
-        setPokemonData(data);
-        setIsLoading(false);
-        setNextURL(data.next);
-        setPreviousURL(data.previous);
-      } catch (error) {
-        setIsLoading(false);
-        setError(error.message);
+  const fetchPokemonList = useCallback(async (url = "https://pokeapi.co/api/v2/pokemon") => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch data`);
       }
-    },
-    [],
-  );
+      const data = await response.json();
+
+      setPokemonData(data);
+      setIsLoading(false);
+      setNextURL(data.next);
+      setPreviousURL(data.previous);
+    } catch (error) {
+      setIsLoading(false);
+      setError(error.message);
+    }
+  }, []);
 
   useEffect(() => {
     fetchPokemonList();
@@ -45,9 +42,7 @@ function App() {
         return await fetchPokemonList();
       }
 
-      const response = await fetch(
-        "https://pokeapi.co/api/v2/pokemon?limit=1154",
-      );
+      const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=1154");
       if (!response.ok) {
         throw new Error(`Failed to search Pokémon list`);
       }
