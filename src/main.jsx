@@ -1,24 +1,14 @@
-import { ChakraProvider, DarkMode, extendTheme } from '@chakra-ui/react';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import { ChakraProvider } from "@chakra-ui/react";
+import ReactDOM from "react-dom/client";
 
-import AppRouter from './AppRouter';
+import AppRouter from "./router";
+import { system } from "./theme";
 
-const theme = extendTheme({
-	initialColorMode: 'dark',
-	styles: {
-		global: () => ({
-			body: { bg: 'var(--chakra-colors-gray-900)' },
-		}),
-	},
-});
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-	<React.StrictMode>
-		<ChakraProvider theme={theme}>
-			<DarkMode>
-				<AppRouter />
-			</DarkMode>
-		</ChakraProvider>
-	</React.StrictMode>
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <ChakraProvider value={system}>
+      <AppRouter />
+    </ChakraProvider>
+  </React.StrictMode>,
 );
