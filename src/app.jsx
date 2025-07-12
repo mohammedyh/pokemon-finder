@@ -52,6 +52,8 @@ function App() {
         item.name.includes(e.target.value.toLowerCase().trim()),
       );
       setPokemonData({ results: filteredPokemon });
+      setNextURL(null);
+      setPreviousURL(null);
     } catch (error) {
       setError(error.message);
     }
