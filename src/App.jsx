@@ -17,7 +17,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { HiMagnifyingGlass } from 'react-icons/hi2';
 import { Link } from 'react-router-dom';
 
-import useDebounce from './hooks/useDebounce';
+import useDebounce from './hooks/use-debounce';
 
 function App() {
 	const [pokemonData, setPokemonData] = useState({});

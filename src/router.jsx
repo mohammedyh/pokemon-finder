@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import App from './App';
-import NotFound from './NotFound';
-import Pokemon from './Pokemon';
+import App from './app';
+import NotFound from './not-found';
+import Pokemon from './pokemon';
 
 function AppRouter() {
 	return (
