@@ -7,12 +7,12 @@ import {
   Heading,
   HStack,
   Image,
-  Spinner,
 } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import Header from "./components/header";
+import Loading from "./components/loading";
 import useDebounce from "./hooks/use-debounce";
 
 function App() {
@@ -86,11 +86,7 @@ function App() {
   }, [fetchPokemonList, previousURL]);
 
   if (isLoading) {
-    return (
-      <Center height="100vh">
-        <Spinner size="lg" color="red" />
-      </Center>
-    );
+    return <Loading />;
   }
 
   if (error) {

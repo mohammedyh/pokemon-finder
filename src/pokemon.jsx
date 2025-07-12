@@ -1,18 +1,17 @@
 import {
   Box,
-  Center,
   Container,
   Grid,
   GridItem,
   Heading,
   HStack,
   Image,
-  Spinner,
   Stat,
 } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
 import { HiArrowLeft } from "react-icons/hi2";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import Loading from "./components/loading";
 
 function Pokemon() {
   const [pokemonData, setPokemonData] = useState({});
@@ -40,11 +39,7 @@ function Pokemon() {
   }, [fetchPokemon]);
 
   if (isLoading) {
-    return (
-      <Center height="100vh">
-        <Spinner />
-      </Center>
-    );
+    return <Loading />;
   }
 
   return (
